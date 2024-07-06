@@ -263,12 +263,18 @@
 
 (%define-ref-and-unref "xkb_keymap" keymap)
 
-;; TODO define xkb_keymap_get_as_string, whose result must be foreign-free'd.
-;; (defcfun "xkb_keymap_get_as_string" :pointer
-;;   (keymap :pointer)
-;;   (format xkb-keymap-format))
+(defcfun "xkb_keymap_get_as_string" :pointer
+  (keymap :pointer)
+  (format xkb-keymap-format))
 
-
+;; TODO: Not sure how cffi handles this - it might've just been enough to set the return
+;; of xkb-keymap-get-as-string as :string
+(defun keymap-get-as-string (keymap format)
+  (let ((string (xkb-keymap-get-as-string keymap format)))
+    (if string
+	(prog1 (foreign-string-to-lisp string) (foreign-free string))
+	(error "Failed to get keymap as string"))))
+
 
 ;; Keymap Components
 

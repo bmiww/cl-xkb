@@ -74,7 +74,7 @@
     #:xkb-keymap-new-from-buffer
     #:xkb-keymap-ref
     #:xkb-keymap-unref
-    #:xkb-keymap-get-as-string
+    #:keymap-get-as-string
 
     ;; Keymap Components
     #:xkb-keymap-min-keycode
